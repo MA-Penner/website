@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../styles.css">
+        <style>
+            body {
+                background-color: rgba(0, 0, 0, 0.75) !important; /* Specific style for this page with increased specificity */
+            }
+        </style>
+        <link rel="icon" type="image/jpeg" href="../squarepfp.jpg">
+        <title>Matthew A. Penner</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header class="header">
+            <h1>Matthew A. Penner</h1>
+            <a href="../index.html" title="main page" class="button-link">Home</a>
+            <a href="../research.html" title="Research page" class="button-link">Research</a>
+            <a href="../Matthew_Penner_CV.pdf" target="_blank" title="Matthew Penner's CV" class="button-link">More about me</a>
+            <a href="mailto:x2019aqg@stfx.ca" target="_blank" title="my email" class="button-link">Contact Me</a>
+        </header>
+            <br><br><br><br><br><br>
+
+        <div class="text-wrap">       
+        <h1 id="q1-summary">Summary</h1>
+        <ul>
+        <li>Formatted data from BaBar experiment into a CSV file.</li>
+        <li>K-Fold validation with KNN, SVM, ANN, and random forest.</li>
+        <li>Stacked learner.</li>
+        <li>Tried several versions of the ANN.</li>
+        <li>Trained for sensitivity.</li>
+        <li>Feature Reduction</li>
+        <li>Report Results </li>
+        <li>Conclusion  </li>
+        </ul>
+
+        <h1 id="q2-dataset-description">Q2. Dataset Description</h1>
+        <h2 id="dataset-description">Dataset Description</h2>
+        <p>High-energy physics, at the forefront of exploring the universe&#39;s fundamental particles and forces, significantly enhances our understanding of the natural world and drives technological advancements. This field seeks to explain basic constituents of the universe such as quarks, leptons, and bosons, including the Higgs boson. Discoveries in this area offer fundamental insights into the universe&#39;s origins and structure.</p>
+        <p>Yet, the field faces challenges, especially in data analysis. For instance, the Large Hadron Collider (LHC) produces about 30 petabytes of data annually, posing significant analysis challenges. It is precisely these large datasets that machine learning algorithms excel at managing. For this project, I focused on searching for Charged Lepton Flavor Violation (CLFV). CLFV in physics refers to the theoretical phenomenon where a charged lepton (like an electron, muon, or tau, which are elementary particles in the Standard Model) changes from one type (or flavor) to another, a process not predicted by the standard model. While flavor changing is observed in neutrinos, it remains unseen in their charged counterparts. The discovery of CLFV, as an electron-positron pair (0 total flavor as they cancel out) decaying to an electron, muon matter-antimatter pair would challenge the Standard Model and potentially reveal new physics, making it a significant focus in particle physics research. This pursuit aims to detect rare events that could indicate these unexpected transformations, offering insights into the fundamental structure of matter and the forces at play in the universe.</p>
+        <p>After several steps to get the data into a CSV format (described below in &quot;Formatted data from the BaBar experiment into a CSV file&quot;), each row represents a collision of particles, and each column is a feature. There remain 101 features after I removed the ones that are only for simulation and not real data. These features are measurements captured by particle detectors surrounding the collision point.</p>
+        <p>I will not go over all 101 features, but they include, for example, the momentum and angles of outgoing particles in various detectors, where different ones are set up to detect different particles.</p>
+        <p>Here are the description of the top 10:</p>
+        <ul>
+        <li><strong>Theta12CM</strong>: The angle between two particles in the center-of-mass frame</li>
+        <li><strong>acolin</strong>: Acolinearity describes the degree to which two particles are not aligned in a straight line, </li>
+        <li><strong>Trk_MuEnergy</strong>: Represents the energy of a muon as detected and tracked</li>
+        <li><strong>Trk_MuPcm</strong>: The momentum of a muon in the center-of-mass </li>
+        <li><strong>M_ElMu</strong>: The invariant mass of an electron-muon system</li>
+        <li><strong>M_ElMuNeu</strong>:  represents the invariant mass of a system comprising an electron, a muon, and a neutrino, essential for studying certain decay channels.</li>
+        <li><strong>lep_mom_cir</strong>:  the momentum of a lepton (like an electron or muon) in a specific direction or configuration</li>
+        <li><strong>Esmall</strong>: Indicates measurements of smaller energys</li>
+        <li><strong>Trk_Muifr</strong>: Related to specific characteristics or measurements of a muon track,providing valuable data for particle identification and collision analysis.</li>
+        <li><strong>Elarge</strong>: A measurement of larger energys</li>
+        </ul>
+        <h2 id="auc-values">AUC Values</h2>
+        <table>
+        <thead>
+        <tr>
+        <th style="text-align:left">Feature</th>
+        <th style="text-align:center">AUC</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td style="text-align:left">Theta12CM</td>
+        <td style="text-align:center">0.947</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">acolin</td>
+        <td style="text-align:center">0.947</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">Trk_MuEnergy</td>
+        <td style="text-align:center">0.909</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">Trk_MuPcm</td>
+        <td style="text-align:center">0.908</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">M_ElMu</td>
+        <td style="text-align:center">0.898</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">M_ElMuNeu</td>
+        <td style="text-align:center">0.898</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">lep_mom_cir</td>
+        <td style="text-align:center">0.897</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">Esmall</td>
+        <td style="text-align:center">0.890</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">Trk_Muifr</td>
+        <td style="text-align:center">0.885</td>
+        </tr>
+        <tr>
+        <td style="text-align:left">Elarge</td>
+        <td style="text-align:center">0.885</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>These AUC values could explain why a random forest works so well and things we typically expect to work well (e.g., SVMs) do not. Some of these features are extremely powerful at predicting the final value, and a decision tree can take this predictive power into account; however, an SVM cannot take this into account as easily, so it gives worse predictions than a simple if statement.</p>
+        <h2 id="the-conventional-technique-extra-background-not-asked-for-">The Conventional Technique </h2>
+        <p>Particle Identification (PID) cuts are essential for data analysis. PID involves determining the type of particle from detector data, focusing on specific properties like energy, momentum, and interaction patterns. To isolate potential CLFV events from routine particle collisions, we apply PID cuts — criteria designed to identify events with characteristics indicative of CLFV, such as a muon decaying into an electron. These criteria might include energy thresholds and decay patterns: basically, a carefully crafted decision tree made with logic and physics in mind. After applying these cuts, the resulting dataset, now filtered to contain possible CLFV candidates, undergoes further analysis for validation, involving statistical methods to assess the likelihood of genuine CLFV events versus background noise. This is done by comparing the real data to data from Monte Carlo simulations that do have CLFV. This approach is very time-consuming and takes several PhD physicists to analyze the data.</p>
+        <h1 id="q3-details">Details</h1>
+        <h2 id="formatted-data-from-the-babar-experiment-into-a-csv-file-">Formatted data from the BaBar experiment into a CSV file.</h2>
+        <p>What I did was get data from two sources: one from a simulation that did not have CLFV and one that did have an electron-positron pair decaying to an electron, muon matter-antimatter pair. I wanted to use both simulations instead of real data because I did not want my machine to accidentally predict simulation or real. I took 10,000 entries from both and made the ones with CLFV my group of interest and the ones without it not. Formatting the data was probably the hardest part. The data is from the BaBar accelerator stored on Compute Canada in a ROOT tree (no relation to the tree data structure you usually hear of). ROOT is software used by particle physicists for data analysis based in C++. The way that it works is data collected from one collision is stored on a &quot;branch&quot; and each branch has a number of different features. Each branch is one sample of features. The issue is some of the features are floats, some are special lists in ROOT and some are ints. For the list, I just made every element 1 feature. I then used the attached file that I made (writeTreeToCSV.C) to take all of this and put it into the framework we are familiar with (see attached code to see the process). After it was in a CSV, I was not done. Some of the features were things you wouldn&#39;t know in a real experiment and only matter in Monte Carlo, so I removed those features and then it was finally ready.</p>
+        <h2 id="k-fold-validation-with-knn-svm-ann-and-random-forest-">K-Fold validation with KNN, SVM, ANN, and random forest.</h2>
+        <p>This step was pretty straightforward. I just implemented KNN with 1, 5, and 10 neighbors, SVMs with RBF, poly, sigmoid kernels, an ANN which I will explain in more detail later, and a random forest with 100 trees. I experimented with various numbers of trees and landed on 100. I used Scikit-Learn&#39;s KFold validation and saved it to a similar file as we did for the assignments.</p>
+        <h2 id="stacked-learner-">Stacked learner:</h2>
+        <p> For the stacked learner, I just used the two best performers (KNN n=5 and random forest) as the base learners and logistic regression as the meta learner.</p>
+        <h2 id="tried-several-versions-of-the-ann">Tried several versions of the ANN</h2>
+        <p>For the ANN, I originally just had 2 hidden layers using ReLU, 10 epochs, and batch size of 64. This gave about a 30% error. I experimented with different configurations with different numbers of batch sizes, hidden layers, nodes in hidden layers, activation functions, and always did enough epochs for it to converge to a number. This brought the error to 20%, still higher than expected but a big improvement.</p>
+        <h2 id="trained-for-sensitivity-">Trained for sensitivity.</h2>
+        <p>Because CLFV is so rare, we cannot afford to miss any instances. Therefore I modified the 2 best classifiers, KNN and random forest, to be biased in favor of positive values. For KNN, I changed it to give a probability of it being each class (a built-in function) and then I made a bias term for this term (between 0 and 1). If the value has a probability of 1-bias or more of being CLFV, classify it as such; if not, say it is not. Even with a bias term of 1, the sensitivity was still not 1. It means KFold predicted a 0% chance of it being 1 and it was wrong. To combat this, I changed N to 5, 10, 20, so the more neighbors mean more likely one will be CLFV, so less likely the probability is 0, and we don&#39;t need N=1 because the probability of it being CLFV is 1 or 0 depending on its one neighbor. KNN did get better sensitivity but still not 1. However, going any higher would affect accuracy too much, which is getting low already (results at end). For The random forest, I did the same thing and found much better results with a bias term of 0.97. This led to a sensitivity of 1 and an accuracy of 90%. This is better than I could have expected going into this project. This would be very useful for practical use.</p>
+        <h2 id="feature-reduction">Feature Reduction</h2>
+        <p>Because there were so many features, and some had a lot more predictive power than others, I used only features with an AUC of 0.7 or greater in hopes that this would improve SVMs and ANNs. However, there was not much improvement, and all it did was make the random forest perform much worse. So, it is not worth reporting on. Nevertheless, I will still attach the files that contain the data.</p>
+        <h2 id="report-results">Report Results</h2>
+        <p>For my results, I will show 4 tables. Two are from my runs focusing on accuracy, showing both error and sensitivity, and are two from my runs focusing on sensitivity, showing both error and sensitivity</p>
+        <h3 id="sensitivity-of-high-sensitivity-model">sensitivity of high sensitivity model</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Classifier</th>
+        <th>Fold 1</th>
+        <th>Fold 2</th>
+        <th>Fold 3</th>
+        <th>Fold 4</th>
+        <th>Fold 5</th>
+        <th>Mean</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>knn5</td>
+        <td>0.8766985405</td>
+        <td>0.9092692496</td>
+        <td>0.897</td>
+        <td>0.9008964143</td>
+        <td>0.8972533062</td>
+        <td>0.8962235021</td>
+        </tr>
+        <tr>
+        <td>knn10</td>
+        <td>0.9612481127</td>
+        <td>0.9730259931</td>
+        <td>0.9725</td>
+        <td>0.9746015936</td>
+        <td>0.978636826</td>
+        <td>0.9720025051</td>
+        </tr>
+        <tr>
+        <td>knn20</td>
+        <td>0.9939607448</td>
+        <td>0.9941147621</td>
+        <td>0.9965</td>
+        <td>0.9945219124</td>
+        <td>0.995930824</td>
+        <td>0.9950056487</td>
+        </tr>
+        <tr>
+        <td>random_forest</td>
+        <td>1.0</td>
+        <td>1.0</td>
+        <td>1.0</td>
+        <td>1.0</td>
+        <td>1.0</td>
+        <td>1.0</td>
+        </tr>
+        </tbody>
+        </table>
+        <h3 id="error-of-high-sensitivity-model">Error of high sensitivity model</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Classifier</th>
+        <th>Fold 1</th>
+        <th>Fold 2</th>
+        <th>Fold 3</th>
+        <th>Fold 4</th>
+        <th>Fold 5</th>
+        <th>Mean</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>knn5</td>
+        <td>17.9</td>
+        <td>18.05</td>
+        <td>17.65</td>
+        <td>17.85</td>
+        <td>17.85</td>
+        <td>17.86</td>
+        </tr>
+        <tr>
+        <td>knn10</td>
+        <td>24.65</td>
+        <td>24.625</td>
+        <td>23.3</td>
+        <td>23.5</td>
+        <td>23.975</td>
+        <td>24.01</td>
+        </tr>
+        <tr>
+        <td>knn20</td>
+        <td>31.7</td>
+        <td>30.5</td>
+        <td>29.925</td>
+        <td>31.075</td>
+        <td>31.475</td>
+        <td>30.935</td>
+        </tr>
+        <tr>
+        <td>random_forest</td>
+        <td>11.325</td>
+        <td>10.775</td>
+        <td>9.675</td>
+        <td>10.525</td>
+        <td>10.15</td>
+        <td>10.49</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Note for both of the above tables there is no data for KNN N=1, because with the method I used it would be the same for high sensitivity model and high accuracy model.</p>
+        <h3 id="sensitivity-of-high-accuracy-model">sensitivity of high accuracy model</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Classifier</th>
+        <th>Fold 1</th>
+        <th>Fold 2</th>
+        <th>Fold 3</th>
+        <th>Fold 4</th>
+        <th>Fold 5</th>
+        <th>Mean</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>knn1</td>
+        <td>0.888667992</td>
+        <td>0.8955445545</td>
+        <td>0.9007021063</td>
+        <td>0.8994441637</td>
+        <td>0.9002506266</td>
+        <td>0.8969218886</td>
+        </tr>
+        <tr>
+        <td>knn5</td>
+        <td>0.9060636183</td>
+        <td>0.9074257426</td>
+        <td>0.9187562688</td>
+        <td>0.9151086407</td>
+        <td>0.9117794486</td>
+        <td>0.9118267438</td>
+        </tr>
+        <tr>
+        <td>knn10</td>
+        <td>0.8996023857</td>
+        <td>0.8995049505</td>
+        <td>0.909227683</td>
+        <td>0.9105608893</td>
+        <td>0.9032581454</td>
+        <td>0.9044308108</td>
+        </tr>
+        <tr>
+        <td>svm_rbf</td>
+        <td>0.9473161034</td>
+        <td>0.95</td>
+        <td>0.9423269809</td>
+        <td>0.9525012633</td>
+        <td>0.9468671679</td>
+        <td>0.9478023031</td>
+        </tr>
+        <tr>
+        <td>svm_poly</td>
+        <td>0.9473161034</td>
+        <td>0.95</td>
+        <td>0.9423269809</td>
+        <td>0.9514906518</td>
+        <td>0.9413533835</td>
+        <td>0.9464974239</td>
+        </tr>
+        <tr>
+        <td>svm_sigmoid</td>
+        <td>0.9433399602</td>
+        <td>0.9247524752</td>
+        <td>0.9403209629</td>
+        <td>0.9282465892</td>
+        <td>0.9453634085</td>
+        <td>0.9364046792</td>
+        </tr>
+        <tr>
+        <td>random_forest</td>
+        <td>0.9930417495</td>
+        <td>0.9900990099</td>
+        <td>0.9919759278</td>
+        <td>0.9944416372</td>
+        <td>0.9929824561</td>
+        <td>0.9925081561</td>
+        </tr>
+        <tr>
+        <td>ANN</td>
+        <td>0.9567594528</td>
+        <td>0.9079207778</td>
+        <td>0.9368104339</td>
+        <td>0.9423951507</td>
+        <td>0.875187993</td>
+        <td>0.9238147616</td>
+        </tr>
+        <tr>
+        <td>Stacked</td>
+        <td>0.9930417495</td>
+        <td>0.9900990099</td>
+        <td>0.9919759278</td>
+        <td>0.9944416372</td>
+        <td>0.9929824561</td>
+        <td>0.9925081561</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Notably all models were better at predicting positives versus negatives, given their high sensitivity versus accuracy. I did make sure to include an equal amount of each sample and to shuffle before training, so I&#39;m not sure why this is.</p>
+        <h3 id="error-of-high-accuracy-model">Error of high accuracy model</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Classifier</th>
+        <th>Fold 1</th>
+        <th>Fold 2</th>
+        <th>Fold 3</th>
+        <th>Fold 4</th>
+        <th>Fold 5</th>
+        <th>Mean</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>knn1</td>
+        <td>11.175</td>
+        <td>11.3</td>
+        <td>11.475</td>
+        <td>11.425</td>
+        <td>11.125</td>
+        <td>11.3</td>
+        </tr>
+        <tr>
+        <td>knn5</td>
+        <td>9.2</td>
+        <td>9.275</td>
+        <td>8.575</td>
+        <td>8.825</td>
+        <td>8.675</td>
+        <td>8.91</td>
+        </tr>
+        <tr>
+        <td>knn10</td>
+        <td>8.975</td>
+        <td>9.15</td>
+        <td>8.675</td>
+        <td>8.725</td>
+        <td>8.725</td>
+        <td>8.85</td>
+        </tr>
+        <tr>
+        <td>svm_rbf</td>
+        <td>26.6</td>
+        <td>26.475</td>
+        <td>26.0</td>
+        <td>26.375</td>
+        <td>25.375</td>
+        <td>26.165</td>
+        </tr>
+        <tr>
+        <td>svm_poly</td>
+        <td>26.6</td>
+        <td>26.425</td>
+        <td>26.0</td>
+        <td>26.3</td>
+        <td>25.575</td>
+        <td>26.18</td>
+        </tr>
+        <tr>
+        <td>svm_sigmoid</td>
+        <td>26.8</td>
+        <td>26.325</td>
+        <td>26.525</td>
+        <td>26.6</td>
+        <td>25.775</td>
+        <td>26.405</td>
+        </tr>
+        <tr>
+        <td>random_forest</td>
+        <td>0.625</td>
+        <td>0.675</td>
+        <td>0.5</td>
+        <td>0.575</td>
+        <td>0.6</td>
+        <td>0.595</td>
+        </tr>
+        <tr>
+        <td>ANN</td>
+        <td>26.17499828</td>
+        <td>20.74999809</td>
+        <td>25.07500052</td>
+        <td>25.3000021</td>
+        <td>15.27500153</td>
+        <td>22.5150001</td>
+        </tr>
+        <tr>
+        <td>Stacked</td>
+        <td>0.65</td>
+        <td>0.6</td>
+        <td>0.35</td>
+        <td>0.625</td>
+        <td>0.45</td>
+        <td>0.535</td>
+        </tr>
+        </tbody>
+        </table>
+        <h2 id="results-discussion">Results Discussion</h2>
+        <p>As you can see from these results, the Random Forest performed the best across all categories. Even when applied in a stacked learning approach, it did not show significant improvement. This aligns with my initial prediction before starting the project, as the Conventional Technique is essentially a meticulously designed decision tree that incorporates logic and physics principles (more details provided in the Extra Background section). so, it makes sense that an group of decision trees would perform well.</p>
+        <p>What&#39;s more surprising is the strong performance of KNN. This could be attributed to the importance of certain features in classification, which are on a larger scale, in KNN leading to greater influence in distance calculations.</p>
+        <p>However, the SVM didn&#39;t perform as well, possibly because it might not be as effective at identifying useful relationships. Even when I considered only the top AUC features, it still underperformed. an example of a relationship could be, both the electron track and muon track prove to be good predictors. If one has a high value while the other is low, it suggests the presence of either two muons or two electrons and no CLFV. Conversely, if they have similar values, it may indicate the presence of both a muon and an electron, signifying CLFV.</p>
+        <p>As for the ANN, it struggled with this complex dataset, which could have led to overfitting.or it also fail to identify useful relationships.</p>
+        <h2 id="conclusion">Conclusion</h2>
+        <p>In conclusion, the random forest is by far the best classifier, and stacking it with other classifiers provided little improvement. I think the most practical use would be to use the High sensitivity model with potentially an even stricter bias term. All that the K-fold proves is that it gets better than 1 out of 10,000 right, but that could still be 30,000 out of 300,000,000. So, a bias term of 1 may be better, and this yields the error rate shown below with perfect sensitivity. What this conceptually means is that if even 1 out of 100 trees says it has CLFV, it should be taken as a yes. This yields an error of 20%. Half of the samples are CLFV, and it obviously gets those right, so that means a 40% error rate on negative samples. That means in practical use it would reduce the workload of physicists by 60%, without fear of missing CLFV.</p>
+        <h3 id="random-forest-with-bias-1-error-">Random Forest with Bias = 1 error %</h3>
+        <table>
+        <thead>
+        <tr>
+        <th>Classifier</th>
+        <th>Fold 1</th>
+        <th>Fold 2</th>
+        <th>Fold 3</th>
+        <th>Fold 4</th>
+        <th>Fold 5</th>
+        <th>Mean</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>random_forest</td>
+        <td>21.875</td>
+        <td>20.700</td>
+        <td>21.425</td>
+        <td>21.425</td>
+        <td>21.425</td>
+        <td>21.370</td>
+        </tr>
+         </div>  
+        </tbody>
+        </table>
