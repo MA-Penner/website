@@ -24,7 +24,7 @@
                 More about me
             </a>
     
-            <a href="mailto:x2019aqg@stfx.ca" target="_blank" title="my email" class="button-link">
+            <a href="mailto:matthew.penner@mail.utoronto.ca" target="_blank" title="my email" class="button-link">
                 Contact Me
             </a>
 
@@ -35,14 +35,12 @@
 
         
         <div class="text-wrap">
-            I am currently in the final year of my Computer Science degree at St. Francis Xavier University, where my coursework is concentrated on machine learning and artificial intelligence. This follows the completion of my honours degree in Physics from the same institution in May 2023, specializing in high-energy physics. My goal is to go to graduate school where I can combine physics and machine learning to better understand the foundations of the universe.
+            I've completed an Honors degree in Physics along with a degree in Computer Science at St. Francis Xavier University. My physics research was centred on high-energy physics, specifically cosmic rays, while my computer science studies focused on machine learning. I'm currently pursuing a Master’s degree in Physics at the University of Toronto, where I'm working on  SuperCDMS.
+            For my second project, I studied charged lepton flavour violation (CLFV), a sign of new physics beyond the standard model. The project familiarized me with experimental setup and data analysis. I was introduced to the BaBar analysis framework and was given several Ntuple files, which I analyzed to determine the invariant mass in the upsilon (2s) decay (to electron and muon). I implemented several selection cuts gradually.
 
+I then attacked this problem from a different angle using machine learning. I wrote a ROOT macro to convert data in a ROOT tree into a CSV format. I used simulation data for the events to allow for events with CLFV, then took out any features that are specific to simulations and that would be unknown in real experiments, reducing the feature space to 101 features. I implemented K-Fold validation with KNN's, SVM's, an ANN, and a random forest to evaluate their performance. After focusing on accuracy and achieving 99.3% accuracy with a random forest, a particular focus was given to enhancing the sensitivity of the models because CLFV is such a rare event you cannot afford to miss it even once. I made adjustments, including biasing the KNN's and random forest towards positive predictions, to ensure no potential CLFV event was overlooked. My results indicate that the random forest algorithm, when adjusted for high sensitivity, outperformed other models, with perfect sensitivity while still maintaining 89% accuracy for the data set (made of 10,000 events with CLFV and 10,000 without). This suggests its suitability for practical applications where reducing the workload of physicists without compromising the detection of rare events is crucial.
 
-            Some research I have conducted in the field includes In my honours thesis, "Finding Energy Difference in Relativistic Cosmic Muons," I utilized a scintillator Muon detector. I calibrated the detector and programmed a ROOT macro to analyze muon behaviour, including lifetime decay rate and energy calculations by taking the detector to different elevations and measuring the flux difference. This research culminated in the presentation of my honours thesis.
-            
-            Subsequently, I delved into charged lepton flavour violation, aiming to uncover new physics beyond the standard model. Here, I got acquainted with the BaBar analysis framework and developed ROOT macros for data analysis provided by Dr. Ahmed, focusing on the invariant mass in the upsilon (2s) decay. My machine learning coursework includes a project that aims to optimize the detection of this rare phenomenon.
-            
-            Lastly, I'm working on a paper based on "Investigating Cosmic Muon Behavior Using Monte Carlo Simulations" with Dr. Ahmed. This unique study uses a time-reversed technique, starting from sea-level measurements and simulating upward through the atmosphere. Developed in C++, our Monte Carlo simulation offers insights into muon dynamics, considering factors like energy, height, and angle of entry. This method is not only novel but also more efficient than conventional simulations.
+My third project, “Investigating Cosmic Muon Behavior Using Monte Carlo Simulations” (currently being prepared for publication) is based on my summer research with Dr. Ahmed. This study utilizes a unique time-reversed approach. The research starts from known measurements at sea level and works backward in time, simulating muon behavior as we ascend through the Earth’s atmosphere. This method stands in contrast to conventional methods, which typically begin at muon production high in the atmosphere and proceed downwards. The central tool in this investigation is a sophisticated Monte Carlo simulation. This simulation captures the reversed path of muons upwards through the Earth’s atmosphere, considering factors such as muon energy, height, angle of entry, and the effects of energy loss. This approach offers a novel perspective on cosmic muon decay.
         </div>     
  
 
