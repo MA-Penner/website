@@ -24,7 +24,7 @@
                 More about me
             </a>
     
-            <a href="mailto:matthew.penner@mail.utoronto.ca" target="_blank" title="my email" class="button-link">
+            <a href="mailto:M.penner@dal.com" target="_blank" title="my email" class="button-link">
                 Contact Me
             </a>
 
@@ -35,13 +35,16 @@
 
         
         <div class="text-wrap">
-            I've completed an Honors degree in Physics along with a degree in Computer Science at St. Francis Xavier University. My physics research was centred on high-energy physics, specifically cosmic rays, while my computer science studies focused on machine learning. I'm currently pursuing a Master’s degree in Physics at the University of Toronto, where I'm working on  SuperCDMS.
-            For my second project, I studied charged lepton flavour violation (CLFV), a sign of new physics beyond the standard model. The project familiarized me with experimental setup and data analysis. I was introduced to the BaBar analysis framework and was given several Ntuple files, which I analyzed to determine the invariant mass in the upsilon (2s) decay (to electron and muon). I implemented several selection cuts gradually.
+            I'm currently a PhD student in Medical Physics at Dalhousie University. My academic journey has included earning a Master of Science in Physics from the University of Toronto and a Bachelor of Science in both Physics and Computer Science from St. Francis Xavier University. My research interests involve using machine learning and Monte carlo simulations
 
-I then attacked this problem from a different angle using machine learning. I wrote a ROOT macro to convert data in a ROOT tree into a CSV format. I used simulation data for the events to allow for events with CLFV, then took out any features that are specific to simulations and that would be unknown in real experiments, reducing the feature space to 101 features. I implemented K-Fold validation with KNN's, SVM's, an ANN, and a random forest to evaluate their performance. After focusing on accuracy and achieving 99.3% accuracy with a random forest, a particular focus was given to enhancing the sensitivity of the models because CLFV is such a rare event you cannot afford to miss it even once. I made adjustments, including biasing the KNN's and random forest towards positive predictions, to ensure no potential CLFV event was overlooked. My results indicate that the random forest algorithm, when adjusted for high sensitivity, outperformed other models, with perfect sensitivity while still maintaining 89% accuracy for the data set (made of 10,000 events with CLFV and 10,000 without). This suggests its suitability for practical applications where reducing the workload of physicists without compromising the detection of rare events is crucial.
+During my Master's at the University of Toronto, I worked on the SuperCDMS experiment, where I used machine learning to determine the location of particle interactions within the detector. This work helps to filter out background events that can mimic the dark matter interactions we're looking for. By training models on simulated data, I was able to predict event positions, which then allows for the exclusion of events at the detector edges. I also used a custom genetic optimization algorithm to improve the model's accuracy and interpretability.
 
-My third project, “Investigating Cosmic Muon Behavior Using Monte Carlo Simulations” (currently being prepared for publication) is based on my summer research with Dr. Ahmed. This study utilizes a unique time-reversed approach. The research starts from known measurements at sea level and works backward in time, simulating muon behavior as we ascend through the Earth’s atmosphere. This method stands in contrast to conventional methods, which typically begin at muon production high in the atmosphere and proceed downwards. The central tool in this investigation is a sophisticated Monte Carlo simulation. This simulation captures the reversed path of muons upwards through the Earth’s atmosphere, considering factors such as muon energy, height, angle of entry, and the effects of energy loss. This approach offers a novel perspective on cosmic muon decay.
-        </div>     
+For a previous project, I explored charged lepton flavor violation (CLFV) as a potential sign of new physics. Using the BaBar analysis framework and ROOT macros, I analyzed data to detect CLFV events. I applied machine learning to simulated data and was able to achieve a success rate of over 99% for detecting these events. When I adjusted the model to have perfect sensitivity, it still maintained a notable 89% accuracy.
+
+I am also the first author on a paper that is currently in review titled "Machine Learning in Differentiated Thyroid Cancer Recurrence and Risk Prediction: the Value of Feature Selection," which is currently under review. This study used a patient dataset to develop and validate machine learning models for predicting thyroid cancer recurrence. Our models achieved a prediction accuracy of 94.8% to 95.9%. The study also looked at predicting American Thyroid Association (ATA) risk scores, which could help with personalized healthcare.
+
+Additionally, for I worked on a study that uses a time-reversed approach, where we simulate muons' movement upward through the atmosphere starting from sea-level measurements. Our Monte Carlo simulation, developed in C++, offers a more efficient way to understand muon dynamics compared to traditional methods.
+         </div>     
  
 
 </html>
